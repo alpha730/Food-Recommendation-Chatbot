@@ -1,0 +1,10 @@
+# Never commit real keys
+.env
+
+.venv/
+__pycache__/
+*.pyc
+
+# Too large for GitHub - the zip is 205 MB and the per-file limit is 100 MB
+synthetic-recipe-images.zip
+synthetic_recipe_images/

@@ -1,0 +1,15 @@
+# Dependencies for food_agent.py and the extracted lesson modules.
+# The agent runs on Groq - no OpenAI packages or keys are needed.
+groq
+gradio==4.29.0
+jinja2==3.1.4
+fastapi==0.110.0
+starlette==0.36.3
+# gradio 4.29 needs the pre-1.0 hub API (HfFolder)
+huggingface_hub==0.23.5
+
+# Used by the Module 1 / Module 2 lesson modules only
+pydantic
+pillow
+matplotlib
+numpy
