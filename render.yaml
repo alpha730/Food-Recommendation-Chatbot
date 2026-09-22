@@ -1,0 +1,21 @@
+# Render Blueprint - https://render.com/docs/blueprint-spec
+#
+# Deploy with: Render dashboard -> New -> Blueprint -> pick this repo.
+# Render reads this file and creates the service already configured.
+#
+# The Python version is pinned in .python-version, NOT here. Render's current
+# default is 3.14, which cannot build this project's pinned dependency set
+# (gradio 4.29, fastapi 0.110, starlette 0.36 all predate it).
+
+services:
+  - type: web
+    name: food-recommendation-chatbot
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    envVars:
+      # sync: false means "ask me for this in the dashboard and keep it out of
+      # the repo" - the key is a secret and must never be committed.
+      - key: GROQ_API_KEY
+        sync: false

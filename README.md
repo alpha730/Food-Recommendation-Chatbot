@@ -1,14 +1,3 @@
----
-title: Food Recommendation Chatbot
-emoji: 🍽️
-colorFrom: orange
-colorTo: red
-sdk: gradio
-sdk_version: 4.29.0
-app_file: app.py
-pinned: false
----
-
 # Food Recommendation Chatbot
 
 A multi-agent food recommendation system running entirely on [Groq](https://console.groq.com/).
@@ -110,13 +99,37 @@ Three datasets ship with the repo:
 The matching recipe image set (~205 MB) is **not** in the repo — it exceeds GitHub's 100 MB
 per-file limit and is gitignored.
 
+## Deploying
+
+The repo ships a [Render](https://render.com) blueprint. In the Render dashboard choose
+**New → Blueprint**, point it at this repo, and set `GROQ_API_KEY` when prompted — it is
+declared `sync: false` in `render.yaml` so the value is entered in the dashboard and never
+committed.
+
+Two things worth knowing about the free plan:
+
+- The service **sleeps after 15 minutes** without traffic, and the next visit takes about a
+  minute to wake it. Free instance hours are capped at 750/month per workspace.
+- The Python version is pinned to 3.11 in `.python-version`. Render's default is 3.14, which
+  cannot build this project's pinned dependencies. Don't remove that file.
+
+`app.py` is the deployment entry point — it binds `0.0.0.0` and reads `$PORT`, so it also
+works unchanged on Spaces, Railway, or Fly. Use `run_app.py` locally.
+
+A deployed instance spends **your** Groq quota on every visitor, and one chat message fans out
+to six agent calls. Keep the URL private, or watch your usage.
+
 ## Repository layout
 
 ```
-run_app.py              Launcher — start here
+run_app.py              Local launcher — start here
 food_agent.py           The complete application (agents, workflow, Gradio UI)
 groq_client.py          Single source of truth for the API key and model names
 requirements.txt        Dependencies for the app
+
+app.py                  Deployment entry point (binds 0.0.0.0 and $PORT)
+render.yaml             Render blueprint
+.python-version         Pins Python 3.11 — required, see Deploying
 
 data.py                 Standalone: parse the restaurant text file
 exercise3.py            Standalone: structure restaurant prose into JSON via Groq
