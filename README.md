@@ -1,3 +1,14 @@
+---
+title: Food Recommendation Chatbot
+emoji: 🍽️
+colorFrom: orange
+colorTo: red
+sdk: gradio
+sdk_version: 4.29.0
+app_file: app.py
+pinned: false
+---
+
 # Food Recommendation Chatbot
 
 A multi-agent food recommendation system running entirely on [Groq](https://console.groq.com/).
